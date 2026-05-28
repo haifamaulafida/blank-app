@@ -5,17 +5,14 @@ import pandas as pd
 # =========================
 st.markdown("""
 <style>
-
 /* Background utama */
 .stApp {
     background:
     radial-gradient(circle at top left, #dbeafe 0%, transparent 30%),
     radial-gradient(circle at bottom right, #bfdbfe 0%, transparent 25%),
     linear-gradient(to bottom right, #f8fbff, #eef6ff);
-    
     background-attachment: fixed;
 }
-
 /* Container utama */
 .block-container {
     padding-top: 1.5rem;
@@ -88,8 +85,6 @@ st.set_page_config(
 )
 
 # 2. Database Uji Kualitatif Organik
-# Kamu bisa menambah data baru di dalam list ini sesuka kamu
-data_uji = [
     {
         "Nama Uji": "Uji Lucas",
         "Gugus Fungsi": "Alkohol (Substitusi)",
@@ -212,7 +207,7 @@ with tab1:
     with col2:
         search_name = st.text_input("Atau ketik nama uji / reagen (contoh: Tollens, FeCl3):")
 
-    # 3. LOGIKA FILTER (Sekarang pasti aman karena variabel sudah terdefinisi di atas)
+    # 3. LOGIKA FILTER
     filtered_df = df.copy()
     
     if search_gugus != "Semua Gugus":
@@ -238,3 +233,15 @@ with tab1:
                 with c2:
                     st.info(f"**💡 Hasil Positif:**\n{row['Hasil Positif']}")
                     st.success(f"**👁️ Pengamatan Visual:**\n{row['Warna/Visual']}")
+
+# TAB 2 - SEMUA DAFTAR UJI
+with tab2:
+    st.markdown("### 📚 Semua Daftar Uji")
+    st.dataframe(
+        df,
+        use_container_width=True,
+        hide_index=True
+    )
+    st.caption("ChemQual dibuat untuk pembelajaran kimia organik.")
+
+
