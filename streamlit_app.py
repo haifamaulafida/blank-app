@@ -163,15 +163,6 @@ data_uji = [
     "Reaksi Kimia": "Aldehida + reagen Schiff --> kompleks berwarna"
 },
 {
-    "Nama Uji": "Uji Ceric Nitrat",
-    "Gugus Fungsi": "Alkohol",
-    "Reagen": "Ceric Ammonium Nitrate",
-    "Prosedur Singkat": "Tambahkan pereaksi ceric nitrat pada sampel.",
-    "Hasil Positif": "Warna berubah menjadi merah.",
-    "Warna/Visual": "🔴 Warna Merah",
-    "Reaksi Kimia": "Alkohol + Ce4+ --> kompleks merah"
-},
-{
     "Nama Uji": "Uji Molisch",
     "Gugus Fungsi": "Karbohidrat",
     "Reagen": "α-naftol + H2SO4 pekat",
