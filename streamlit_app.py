@@ -12,81 +12,80 @@ st.set_page_config(
 )
 
 # =========================================================
-# CUSTOM CSS (AESTHETIC UI)
+# CUSTOM CSS (LIGHT MODE AESTHETIC)
 # =========================================================
 st.markdown("""
 <style>
 
 .main {
-    background: linear-gradient(to bottom right, #0f172a, #111827);
-    color: white;
-}
-
-h1, h2, h3, h4 {
-    color: #ffffff;
+    background-color: #f8fafc;
 }
 
 .stApp {
-    background: linear-gradient(to bottom right, #0f172a, #111827);
-}
-
-.css-1d391kg {
-    background-color: #111827;
-}
-
-.card {
-    background: rgba(255,255,255,0.05);
-    padding: 25px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.01);
-    border: 1px solid #38bdf8;
-}
-
-.reaction-box {
-    background: #020617;
-    padding: 12px;
-    border-radius: 12px;
-    font-family: monospace;
-    color: #7dd3fc;
-    border-left: 4px solid #38bdf8;
+    background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
 }
 
 .title-main {
-    font-size: 55px;
-    font-weight: bold;
-    color: #7dd3fc;
+    font-size: 42px;
+    font-weight: 700;
+    color: #0f172a;
 }
 
 .subtitle {
-    font-size: 20px;
-    color: #cbd5e1;
+    font-size: 17px;
+    color: #475569;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.reaction-box {
+    background: #eff6ff;
+    padding: 10px;
+    border-radius: 10px;
+    border-left: 4px solid #38bdf8;
+    font-family: monospace;
+    color: #0f172a;
+    margin-top: 10px;
 }
 
 .footer {
     text-align: center;
     color: gray;
-    margin-top: 50px;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.small-text {
+    font-size: 15px;
+    color: #334155;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 # =========================================================
-# DATABASE
+# DATABASE UJI ORGANIK
 # =========================================================
 data_uji = [
+
     {
         "Nama Uji": "Uji Lucas",
         "Gugus Fungsi": "Alkohol",
         "Reagen": "HCl pekat + ZnCl2",
-        "Prosedur": "Campurkan sampel dengan reagen Lucas pada suhu kamar.",
+        "Prosedur": "Campurkan sampel dengan reagen Lucas.",
         "Hasil": "Terbentuk kekeruhan.",
         "Visual": "⚪ Keruh / 2 lapisan",
         "Reaksi": "R-OH + HCl → R-Cl + H2O"
@@ -96,7 +95,7 @@ data_uji = [
         "Nama Uji": "Uji Tollens",
         "Gugus Fungsi": "Aldehida",
         "Reagen": "AgNO3 + NH4OH",
-        "Prosedur": "Panaskan sampel dengan reagen Tollens.",
+        "Prosedur": "Panaskan dengan reagen Tollens.",
         "Hasil": "Cermin perak terbentuk.",
         "Visual": "🪞 Silver mirror",
         "Reaksi": "R-CHO → Ag(s)"
@@ -130,7 +129,38 @@ data_uji = [
         "Hasil": "Warna ungu hilang.",
         "Visual": "🟤 Endapan coklat",
         "Reaksi": "KMnO4 → MnO2"
+    },
+
+    {
+        "Nama Uji": "Uji Iodoform",
+        "Gugus Fungsi": "Metil Keton / Etanol",
+        "Reagen": "I2 + NaOH",
+        "Prosedur": "Tambahkan iodin dan NaOH lalu panaskan perlahan.",
+        "Hasil": "Terbentuk endapan kuning.",
+        "Visual": "🟡 Endapan kuning iodoform",
+        "Reaksi": "CH3CO- + I2 → CHI3"
+    },
+
+    {
+        "Nama Uji": "Uji Benedict",
+        "Gugus Fungsi": "Gula Pereduksi",
+        "Reagen": "Larutan Benedict",
+        "Prosedur": "Panaskan sampel dengan larutan Benedict.",
+        "Hasil": "Warna berubah menjadi merah bata.",
+        "Visual": "🟠 Endapan merah bata",
+        "Reaksi": "Cu²⁺ → Cu2O"
+    },
+
+    {
+        "Nama Uji": "Uji Bromin",
+        "Gugus Fungsi": "Alkena",
+        "Reagen": "Br2/CCl4",
+        "Prosedur": "Tambahkan bromin ke sampel.",
+        "Hasil": "Warna bromin hilang.",
+        "Visual": "🟤 Warna coklat hilang",
+        "Reaksi": "C=C + Br2 → C-C"
     }
+
 ]
 
 df = pd.DataFrame(data_uji)
@@ -148,12 +178,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.write("")
-
 # =========================================================
-# SEARCH SECTION
+# SEARCH
 # =========================================================
-st.markdown("## 🔍 Pencarian")
+st.markdown("### 🔍 Pencarian")
 
 col1, col2 = st.columns(2)
 
@@ -186,29 +214,33 @@ if keyword:
 st.write("")
 
 # =========================================================
-# DISPLAY CARDS
+# CARD DISPLAY
 # =========================================================
 for index, row in filtered_df.iterrows():
 
     st.markdown(f"""
     <div class="card">
 
-    <h2>🧪 {row['Nama Uji']}</h2>
+    <h3>🧪 {row['Nama Uji']}</h3>
 
-    <p><b>🎯 Gugus Fungsi:</b><br>
-    {row['Gugus Fungsi']}</p>
+    <div class="small-text">
 
-    <p><b>🔬 Reagen:</b><br>
-    {row['Reagen']}</p>
+    <b>🎯 Gugus Fungsi:</b><br>
+    {row['Gugus Fungsi']}<br><br>
 
-    <p><b>📝 Prosedur:</b><br>
-    {row['Prosedur']}</p>
+    <b>🔬 Reagen:</b><br>
+    {row['Reagen']}<br><br>
 
-    <p><b>💡 Hasil Positif:</b><br>
-    {row['Hasil']}</p>
+    <b>📝 Prosedur:</b><br>
+    {row['Prosedur']}<br><br>
 
-    <p><b>👁️ Pengamatan Visual:</b><br>
-    {row['Visual']}</p>
+    <b>💡 Hasil Positif:</b><br>
+    {row['Hasil']}<br><br>
+
+    <b>👁️ Pengamatan Visual:</b><br>
+    {row['Visual']}
+
+    </div>
 
     <div class="reaction-box">
     ⚗️ {row['Reaksi']}
