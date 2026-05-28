@@ -85,6 +85,7 @@ st.set_page_config(
 )
 
 # 2. Database Uji Kualitatif Organik
+data_uji = [
     {
         "Nama Uji": "Uji Lucas",
         "Gugus Fungsi": "Alkohol (Substitusi)",
