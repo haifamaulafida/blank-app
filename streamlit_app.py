@@ -225,4 +225,3 @@ st.markdown("""
 © 2026 ChemQual Premium — Organic Chemistry Lab Assistant
 </div>
 """, unsafe_allow_html=True)
-```
