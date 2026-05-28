@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # =========================================================
-# CUSTOM CSS (LIGHT MODE AESTHETIC)
+# CUSTOM CSS
 # =========================================================
 st.markdown("""
 <style>
@@ -21,10 +21,20 @@ st.markdown("""
     background-color: #f8fafc;
 }
 
+/* Background aesthetic */
 .stApp {
-    background: linear-gradient(to bottom right, #f8fafc, #e2e8f0);
+
+    background-color: #f1f5f9;
+
+    background-image:
+        radial-gradient(#cbd5e1 1px, transparent 1px),
+        radial-gradient(#cbd5e1 1px, transparent 1px);
+
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
 }
 
+/* Title */
 .title-main {
     font-size: 42px;
     font-weight: 700;
@@ -37,13 +47,20 @@ st.markdown("""
     margin-bottom: 20px;
 }
 
+/* Card modern */
 .card {
-    background: white;
+
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+
     padding: 20px;
     border-radius: 18px;
     margin-bottom: 18px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+
+    border: 1px solid rgba(255,255,255,0.5);
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
     transition: 0.2s;
 }
 
@@ -51,6 +68,7 @@ st.markdown("""
     transform: translateY(-2px);
 }
 
+/* Reaction box */
 .reaction-box {
     background: #eff6ff;
     padding: 10px;
@@ -61,6 +79,13 @@ st.markdown("""
     margin-top: 10px;
 }
 
+/* Small text */
+.small-text {
+    font-size: 15px;
+    color: #334155;
+}
+
+/* Footer */
 .footer {
     text-align: center;
     color: gray;
@@ -68,16 +93,11 @@ st.markdown("""
     font-size: 14px;
 }
 
-.small-text {
-    font-size: 15px;
-    color: #334155;
-}
-
 </style>
 """, unsafe_allow_html=True)
 
 # =========================================================
-# DATABASE UJI ORGANIK
+# DATABASE
 # =========================================================
 data_uji = [
 
@@ -137,7 +157,7 @@ data_uji = [
         "Reagen": "I2 + NaOH",
         "Prosedur": "Tambahkan iodin dan NaOH lalu panaskan perlahan.",
         "Hasil": "Terbentuk endapan kuning.",
-        "Visual": "🟡 Endapan kuning iodoform",
+        "Visual": "🟡 Endapan kuning",
         "Reaksi": "CH3CO- + I2 → CHI3"
     },
 
@@ -145,8 +165,8 @@ data_uji = [
         "Nama Uji": "Uji Benedict",
         "Gugus Fungsi": "Gula Pereduksi",
         "Reagen": "Larutan Benedict",
-        "Prosedur": "Panaskan sampel dengan larutan Benedict.",
-        "Hasil": "Warna berubah menjadi merah bata.",
+        "Prosedur": "Panaskan dengan larutan Benedict.",
+        "Hasil": "Endapan merah bata.",
         "Visual": "🟠 Endapan merah bata",
         "Reaksi": "Cu²⁺ → Cu2O"
     },
@@ -177,6 +197,8 @@ st.markdown(
     "<div class='subtitle'>Katalog Modern Uji Kualitatif Senyawa Organik</div>",
     unsafe_allow_html=True
 )
+
+st.write("")
 
 # =========================================================
 # SEARCH
@@ -211,10 +233,8 @@ if keyword:
         filtered_df["Reagen"].str.contains(keyword, case=False)
     ]
 
-st.write("")
-
 # =========================================================
-# CARD DISPLAY
+# DISPLAY CARD
 # =========================================================
 for index, row in filtered_df.iterrows():
 
