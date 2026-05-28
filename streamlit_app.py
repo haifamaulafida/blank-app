@@ -1,15 +1,18 @@
 import streamlit as st
 import pandas as pd
 
-# 1. Konfigurasi Halaman & Tema Sederhana
+# =========================================================
+# KONFIGURASI HALAMAN
+# =========================================================
 st.set_page_config(
-    page_title="ChemQual - Katalog Organik", 
-    page_icon="🧪", 
+    page_title="ChemQual - Katalog Organik",
+    page_icon="🧪",
     layout="wide"
 )
 
-# 2. Database Uji Kualitatif Organik
-# Kamu bisa menambah data baru di dalam list ini sesuka kamu
+# =========================================================
+# DATABASE UJI KUALITATIF ORGANIK
+# =========================================================
 data_uji = [
     {
         "Nama Uji": "Uji Lucas",
@@ -67,78 +70,147 @@ data_uji = [
     }
 ]
 
+# =========================================================
+# DATAFRAME
+# =========================================================
 df = pd.DataFrame(data_uji)
 
-# 3. Tampilan Header Aplikasi
+# =========================================================
+# HEADER APLIKASI
+# =========================================================
 st.title("🧪 ChemQual v1.0")
 st.subheader("Katalog Uji Kualitatif Senyawa Organik")
-st.write("Aplikasi saku untuk membantu mahasiswa/siswa mengidentifikasi gugus fungsi organik di laboratorium.")
+
+st.write(
+    "Aplikasi saku untuk membantu mahasiswa/siswa "
+    "mengidentifikasi gugus fungsi organik di laboratorium."
+)
 
 st.divider()
 
-# 4. Membuat Menu Navigasi dengan Tabs
-tab1, tab2 = st.tabs(["🔍 Pencarian & Filter", "📚 Semua Daftar Uji"])
+# =========================================================
+# NAVIGASI TABS
+# =========================================================
+tab1, tab2 = st.tabs([
+    "🔍 Pencarian & Filter",
+    "📚 Semua Daftar Uji"
+])
+
+# =========================================================
+# TAB 1 — PENCARIAN
+# =========================================================
 with tab1:
-    st.markdown("### Cari Berdasarkan Parameter")
-    
-    # 1. BUAT VARIABEL KOSONG TERLEBIH DAHULU (Agar tidak NameError)
+
+    st.markdown("## 🔍 Cari Berdasarkan Parameter")
+
+    # Variabel default
     search_gugus = "Semua Gugus"
     search_name = ""
-    
-    # 2. MEMBUAT KOLOM TAMPILAN
+
+    # Kolom input
     col1, col2 = st.columns(2)
-    
+
     with col1:
         search_gugus = st.selectbox(
-            "Pilih Gugus Fungsi yang mau dicari:",
+            "Pilih Gugus Fungsi:",
             ["Semua Gugus"] + list(df["Gugus Fungsi"].unique())
         )
-    
-    with col2:
-        search_name = st.text_input("Atau ketik nama uji / reagen (contoh: Tollens, FeCl3):")
 
-    # 3. LOGIKA FILTER (Sekarang pasti aman karena variabel sudah terdefinisi di atas)
+    with col2:
+        search_name = st.text_input(
+            "Cari nama uji / reagen:",
+            placeholder="Contoh: Tollens, FeCl3"
+        )
+
+    # Filter dataframe
     filtered_df = df.copy()
-    
+
     if search_gugus != "Semua Gugus":
-        filtered_df = filtered_df[filtered_df["Gugus Fungsi"] == search_gugus]
-        
+        filtered_df = filtered_df[
+            filtered_df["Gugus Fungsi"] == search_gugus
+        ]
+
     if search_name:
         filtered_df = filtered_df[
-            filtered_df["Nama Uji"].str.contains(search_name, case=False) | 
+            filtered_df["Nama Uji"].str.contains(search_name, case=False) |
             filtered_df["Reagen"].str.contains(search_name, case=False)
         ]
 
-    # 4. MENAMPILKAN DATA
+    # Tampilkan hasil
     if filtered_df.empty:
-        st.warning("Uji kualitatif tidak ditemukan. Coba kata kunci lain!")
+        st.warning("❌ Uji tidak ditemukan.")
     else:
         for index, row in filtered_df.iterrows():
-            with st.expander(f"🔹 {row['Nama Uji']} — Target: {row['Gugus Fungsi']}", expanded=True):
-                c1, c2 = st.columns([2, 1])
-                with c1:
-                    st.markdown(f"**🔬 Reagen:** {row['Reagen']}")
-                    st.markdown(f"**📝 Prosedur:** {row['Prosedur Singkat']}")
-                    st.markdown(f"**⚗️ Persamaan Reaksi:** `{row['Reaksi Kimia']}`")
-                with c2:
-                    st.info(f"**💡 Hasil Positif:**\n{row['Hasil Positif']}")
 
-# TAB 2 — Semua Data Uji
+            with st.expander(
+                f"🧪 {row['Nama Uji']} — {row['Gugus Fungsi']}",
+                expanded=True
+            ):
+
+                c1, c2 = st.columns([2, 1])
+
+                with c1:
+                    st.markdown(f"### 🔬 Reagen")
+                    st.write(row["Reagen"])
+
+                    st.markdown("### 📝 Prosedur")
+                    st.write(row["Prosedur Singkat"])
+
+                    st.markdown("### ⚗️ Persamaan Reaksi")
+                    st.code(row["Reaksi Kimia"], language="text")
+
+                with c2:
+                    st.info(
+                        f"💡 Hasil Positif:\n\n{row['Hasil Positif']}"
+                    )
+
+                    st.success(
+                        f"👁️ Pengamatan Visual:\n\n{row['Warna/Visual']}"
+                    )
+
+# =========================================================
+# TAB 2 — SEMUA DATA
+# =========================================================
 with tab2:
-    st.markdown("### 📚 Daftar Lengkap Uji Kualitatif")
+
+    st.markdown("## 📚 Daftar Lengkap Uji Kualitatif")
 
     for index, row in df.iterrows():
-        st.card = st.container()
 
-        with st.card:
-            st.markdown(f"## 🧪 {row['Nama Uji']}")
-            st.write(f"**Target Gugus Fungsi:** {row['Gugus Fungsi']}")
-            st.write(f"**Reagen:** {row['Reagen']}")
-            st.write(f"**Prosedur:** {row['Prosedur Singkat']}")
-            st.write(f"**Hasil Positif:** {row['Hasil Positif']}")
-            st.write(f"**Visual:** {row['Warna/Visual']}")
+        with st.container():
 
-            st.code(row['Reaksi Kimia'], language=" الكيمياء ")
+            st.markdown(f"# 🧪 {row['Nama Uji']}")
+
+            col1, col2 = st.columns([2, 1])
+
+            with col1:
+                st.write(
+                    f"### 🎯 Gugus Fungsi\n{row['Gugus Fungsi']}"
+                )
+
+                st.write(
+                    f"### 🔬 Reagen\n{row['Reagen']}"
+                )
+
+                st.write(
+                    f"### 📝 Prosedur\n{row['Prosedur Singkat']}"
+                )
+
+                st.write("### ⚗️ Reaksi Kimia")
+                st.code(row["Reaksi Kimia"], language="text")
+
+            with col2:
+                st.info(
+                    f"💡 Hasil Positif:\n\n{row['Hasil Positif']}"
+                )
+
+                st.success(
+                    f"👁️ Visual:\n\n{row['Warna/Visual']}"
+                )
 
             st.divider()
-                    st.success(f"**👁️ Pengamatan Visual:**\n{row['Warna/Visual']}")
+
+# =========================================================
+# FOOTER
+# =========================================================
+st.caption("© 2026 ChemQual — Katalog Uji Organik")
