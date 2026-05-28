@@ -122,6 +122,7 @@ with tab1:
                     st.markdown(f"**⚗️ Persamaan Reaksi:** `{row['Reaksi Kimia']}`")
                 with c2:
                     st.info(f"**💡 Hasil Positif:**\n{row['Hasil Positif']}")
+
 # TAB 2 — Semua Data Uji
 with tab2:
     st.markdown("### 📚 Daftar Lengkap Uji Kualitatif")
