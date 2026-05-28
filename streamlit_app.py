@@ -122,4 +122,22 @@ with tab1:
                     st.markdown(f"**⚗️ Persamaan Reaksi:** `{row['Reaksi Kimia']}`")
                 with c2:
                     st.info(f"**💡 Hasil Positif:**\n{row['Hasil Positif']}")
+# TAB 2 — Semua Data Uji
+with tab2:
+    st.markdown("### 📚 Daftar Lengkap Uji Kualitatif")
+
+    for index, row in df.iterrows():
+        st.card = st.container()
+
+        with st.card:
+            st.markdown(f"## 🧪 {row['Nama Uji']}")
+            st.write(f"**Target Gugus Fungsi:** {row['Gugus Fungsi']}")
+            st.write(f"**Reagen:** {row['Reagen']}")
+            st.write(f"**Prosedur:** {row['Prosedur Singkat']}")
+            st.write(f"**Hasil Positif:** {row['Hasil Positif']}")
+            st.write(f"**Visual:** {row['Warna/Visual']}")
+
+            st.code(row['Reaksi Kimia'], language=" الكيمياء ")
+
+            st.divider()
                     st.success(f"**👁️ Pengamatan Visual:**\n{row['Warna/Visual']}")
