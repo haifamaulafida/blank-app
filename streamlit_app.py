@@ -143,7 +143,52 @@ data_uji = [
         "Hasil Positif": "Warna ungu dari KMnO4 hilang dan terbentuk endapan coklat.",
         "Warna/Visual": "🟤 Warna Ungu Hilang & Endapan Coklat",
         "Reaksi Kimia": "3R-CH=CH-R + 2KMnO4 + 4H2O --> 3R-CH(OH)-CH(OH)-R + 2MnO2 (s) + 2KOH"
-    }
+    },
+{
+    "Nama Uji": "Uji Benedict",
+    "Gugus Fungsi": "Gula Pereduksi / Aldehida",
+    "Reagen": "Larutan Benedict",
+    "Prosedur Singkat": "Tambahkan pereaksi Benedict ke sampel lalu panaskan beberapa menit.",
+    "Hasil Positif": "Larutan berubah dari biru menjadi hijau, kuning, jingga, hingga merah bata.",
+    "Warna/Visual": "🟠 Endapan Merah Bata",
+    "Reaksi Kimia": "R-CHO + Cu2+ + OH- --> R-COO- + Cu2O (s)"
+},
+{
+    "Nama Uji": "Uji Schiff",
+    "Gugus Fungsi": "Aldehida",
+    "Reagen": "Reagen Schiff",
+    "Prosedur Singkat": "Tambahkan reagen Schiff ke sampel.",
+    "Hasil Positif": "Muncul warna merah muda atau magenta.",
+    "Warna/Visual": "💗 Merah Muda / Magenta",
+    "Reaksi Kimia": "Aldehida + reagen Schiff --> kompleks berwarna"
+},
+{
+    "Nama Uji": "Uji Ceric Nitrat",
+    "Gugus Fungsi": "Alkohol",
+    "Reagen": "Ceric Ammonium Nitrate",
+    "Prosedur Singkat": "Tambahkan pereaksi ceric nitrat pada sampel.",
+    "Hasil Positif": "Warna berubah menjadi merah.",
+    "Warna/Visual": "🔴 Warna Merah",
+    "Reaksi Kimia": "Alkohol + Ce4+ --> kompleks merah"
+},
+{
+    "Nama Uji": "Uji Molisch",
+    "Gugus Fungsi": "Karbohidrat",
+    "Reagen": "α-naftol + H2SO4 pekat",
+    "Prosedur Singkat": "Tambahkan pereaksi Molisch lalu alirkan H2SO4 perlahan.",
+    "Hasil Positif": "Terbentuk cincin ungu pada batas larutan.",
+    "Warna/Visual": "🟣 Cincin Ungu",
+    "Reaksi Kimia": "Karbohidrat --> furfural --> kompleks ungu"
+},
+{
+    "Nama Uji": "Uji Saponifikasi",
+    "Gugus Fungsi": "Ester / Lemak",
+    "Reagen": "NaOH atau KOH",
+    "Prosedur Singkat": "Panaskan sampel dengan basa kuat.",
+    "Hasil Positif": "Terbentuk sabun atau emulsi.",
+    "Warna/Visual": "🫧 Emulsi / Sabun",
+    "Reaksi Kimia": "Ester + NaOH --> Alkohol + Garam Asam"
+}
 ]
 
 df = pd.DataFrame(data_uji)
