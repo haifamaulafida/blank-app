@@ -169,18 +169,7 @@ data_uji = [
         "Hasil": "Endapan merah bata.",
         "Visual": "🟠 Endapan merah bata",
         "Reaksi": "Cu²⁺ → Cu2O"
-    },
-
-    {
-        "Nama Uji": "Uji Bromin",
-        "Gugus Fungsi": "Alkena",
-        "Reagen": "Br2/CCl4",
-        "Prosedur": "Tambahkan bromin ke sampel.",
-        "Hasil": "Warna bromin hilang.",
-        "Visual": "🟤 Warna coklat hilang",
-        "Reaksi": "C=C + Br2 → C-C"
     }
-
 ]
 
 df = pd.DataFrame(data_uji)
