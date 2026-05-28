@@ -1,6 +1,85 @@
 import streamlit as st
 import pandas as pd
+# =========================
+# CUSTOM CSS
+# =========================
+st.markdown("""
+<style>
 
+/* Background utama */
+.stApp {
+    background:
+    radial-gradient(circle at top left, #dbeafe 0%, transparent 30%),
+    radial-gradient(circle at bottom right, #bfdbfe 0%, transparent 25%),
+    linear-gradient(to bottom right, #f8fbff, #eef6ff);
+    
+    background-attachment: fixed;
+}
+
+/* Container utama */
+.block-container {
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1200px;
+}
+
+/* Judul */
+h1, h2, h3 {
+    color: #12355b;
+    font-weight: 700;
+}
+
+/* Expander/card */
+[data-testid="stExpander"] {
+    border-radius: 18px;
+    border: 1px solid #d6e4f0;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+}
+
+/* Isi expander */
+.streamlit-expanderContent {
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 12px;
+}
+
+/* Input box */
+.stTextInput input,
+.stSelectbox div[data-baseweb="select"] {
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+}
+
+/* Tombol & alert */
+.stAlert {
+    border-radius: 14px;
+}
+
+/* Divider */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #93c5fd, transparent);
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(to bottom, #dbeafe, #eff6ff);
+    border-right: 1px solid #cbd5e1;
+}
+
+</style>
+""", unsafe_allow_html=True)
 # 1. Konfigurasi Halaman & Tema Sederhana
 st.set_page_config(
     page_title="ChemQual - Katalog Organik", 
