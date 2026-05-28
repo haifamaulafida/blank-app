@@ -1,216 +1,228 @@
- import streamlit as st
+```python
+import streamlit as st
 import pandas as pd
 
 # =========================================================
-# KONFIGURASI HALAMAN
+# PAGE CONFIG
 # =========================================================
 st.set_page_config(
-    page_title="ChemQual - Katalog Organik",
+    page_title="ChemQual Premium",
     page_icon="🧪",
     layout="wide"
 )
 
 # =========================================================
-# DATABASE UJI KUALITATIF ORGANIK
+# CUSTOM CSS (AESTHETIC UI)
+# =========================================================
+st.markdown("""
+<style>
+
+.main {
+    background: linear-gradient(to bottom right, #0f172a, #111827);
+    color: white;
+}
+
+h1, h2, h3, h4 {
+    color: #ffffff;
+}
+
+.stApp {
+    background: linear-gradient(to bottom right, #0f172a, #111827);
+}
+
+.css-1d391kg {
+    background-color: #111827;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    border: 1px solid #38bdf8;
+}
+
+.reaction-box {
+    background: #020617;
+    padding: 12px;
+    border-radius: 12px;
+    font-family: monospace;
+    color: #7dd3fc;
+    border-left: 4px solid #38bdf8;
+}
+
+.title-main {
+    font-size: 55px;
+    font-weight: bold;
+    color: #7dd3fc;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #cbd5e1;
+}
+
+.footer {
+    text-align: center;
+    color: gray;
+    margin-top: 50px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =========================================================
+# DATABASE
 # =========================================================
 data_uji = [
     {
         "Nama Uji": "Uji Lucas",
-        "Gugus Fungsi": "Alkohol (Substitusi)",
-        "Reagen": "HCl pekat + ZnCl2 (Reagen Lucas)",
-        "Prosedur Singkat": "Campurkan sampel dengan reagen Lucas pada suhu kamar, amati kecepatan terbentuknya kekeruhan/fasa cair terpisah.",
-        "Hasil Positif": "Tersier: Instan (<1 menit)\nSekunder: 5-10 menit\nPrimer: Tidak bereaksi pada suhu kamar",
-        "Warna/Visual": "⚪ Kekeruhan / Terbentuk 2 Lapisan",
-        "Reaksi Kimia": "R-OH + HCl --(ZnCl2)--> R-Cl + H2O"
+        "Gugus Fungsi": "Alkohol",
+        "Reagen": "HCl pekat + ZnCl2",
+        "Prosedur": "Campurkan sampel dengan reagen Lucas pada suhu kamar.",
+        "Hasil": "Terbentuk kekeruhan.",
+        "Visual": "⚪ Keruh / 2 lapisan",
+        "Reaksi": "R-OH + HCl → R-Cl + H2O"
     },
+
     {
         "Nama Uji": "Uji Tollens",
         "Gugus Fungsi": "Aldehida",
-        "Reagen": "AgNO3 + NaOH + NH4OH (Reagen Tollens)",
-        "Prosedur Singkat": "Tambahkan sampel ke dalam reagen Tollens, lalu panaskan di penangas air selama beberapa menit.",
-        "Hasil Positif": "Terbentuk lapisan perak mengkilap di dinding tabung reaksi.",
-        "Warna/Visual": "🪞 Cermin Perak (Silver Mirror)",
-        "Reaksi Kimia": "R-CHO + 2[Ag(NH3)2]+ + 3OH- --> R-COO- + 2Ag (s) + 4NH3 + 2H2O"
+        "Reagen": "AgNO3 + NH4OH",
+        "Prosedur": "Panaskan sampel dengan reagen Tollens.",
+        "Hasil": "Cermin perak terbentuk.",
+        "Visual": "🪞 Silver mirror",
+        "Reaksi": "R-CHO → Ag(s)"
     },
+
     {
         "Nama Uji": "Uji Fehling",
         "Gugus Fungsi": "Aldehida",
-        "Reagen": "Fehling A (CuSO4) + Fehling B (K-Na-tartrat + NaOH)",
-        "Prosedur Singkat": "Campurkan Fehling A dan B (1:1), tambahkan sampel, lalu panaskan di penangas air.",
-        "Hasil Positif": "Warna biru tua reagen akan berubah menjadi endapan merah bata.",
-        "Warna/Visual": "🔴 Endapan Merah Bata",
-        "Reaksi Kimia": "R-CHO + 2Cu2+ + 5OH- --> R-COO- + Cu2O (s) + 3H2O"
+        "Reagen": "Fehling A + Fehling B",
+        "Prosedur": "Panaskan campuran dengan sampel.",
+        "Hasil": "Endapan merah bata.",
+        "Visual": "🔴 Endapan merah",
+        "Reaksi": "Cu²⁺ → Cu2O"
     },
+
     {
         "Nama Uji": "Uji Ferri Klorida",
         "Gugus Fungsi": "Fenol",
-        "Reagen": "Larutan FeCl3 1% atau 5%",
-        "Prosedur Singkat": "Larutkan sampel dalam air/etanol, lalu teteskan beberapa tetes larutan FeCl3.",
-        "Hasil Positif": "Terbentuk warna ungu, hijau, atau biru kompleks yang pekat.",
-        "Warna/Visual": "🟣 Warna Ungu / Biru / Hijau Pekat",
-        "Reaksi Kimia": "6Ar-OH + Fe3+ --> [Fe(OAr)6]3- (kompleks berwarna) + 6H+"
+        "Reagen": "FeCl3",
+        "Prosedur": "Tambahkan FeCl3 ke sampel.",
+        "Hasil": "Warna ungu/biru/hijau.",
+        "Visual": "🟣 Kompleks berwarna",
+        "Reaksi": "Fenol + Fe³⁺"
     },
-    {
-        "Nama Uji": "Uji Natrium Bikarbonat",
-        "Gugus Fungsi": "Asam Karboksilat",
-        "Reagen": "Larutan NaHCO3 5%",
-        "Prosedur Singkat": "Tambahkan sampel organik ke dalam larutan NaHCO3 jenuh.",
-        "Hasil Positif": "Terbentuk gelembung gas dengan cepat (efervesen).",
-        "Warna/Visual": "🫧 Gelembung Gas (CO2)",
-        "Reaksi Kimia": "R-COOH + NaHCO3 --> R-COONa + H2O + CO2 (g)"
-    },
+
     {
         "Nama Uji": "Uji Baeyer",
-        "Gugus Fungsi": "Alkena / Alkuna (Ikatan Rangkap)",
-        "Reagen": "Larutan KMnO4 1% (Basa/Netral)",
-        "Prosedur Singkat": "Teteskan larutan KMnO4 ke dalam sampel sambil dikocok.",
-        "Hasil Positif": "Warna ungu dari KMnO4 hilang dan terbentuk endapan coklat.",
-        "Warna/Visual": "🟤 Warna Ungu Hilang & Endapan Coklat",
-        "Reaksi Kimia": "3R-CH=CH-R + 2KMnO4 + 4H2O --> 3R-CH(OH)-CH(OH)-R + 2MnO2 (s) + 2KOH"
+        "Gugus Fungsi": "Alkena / Alkuna",
+        "Reagen": "KMnO4",
+        "Prosedur": "Tambahkan KMnO4 ke sampel.",
+        "Hasil": "Warna ungu hilang.",
+        "Visual": "🟤 Endapan coklat",
+        "Reaksi": "KMnO4 → MnO2"
     }
 ]
 
-# =========================================================
-# DATAFRAME
-# =========================================================
 df = pd.DataFrame(data_uji)
 
 # =========================================================
-# HEADER APLIKASI
+# HEADER
 # =========================================================
-st.title("🧪 ChemQual v1.0")
-st.subheader("Katalog Uji Kualitatif Senyawa Organik")
-
-st.write(
-    "Aplikasi saku untuk membantu mahasiswa/siswa "
-    "mengidentifikasi gugus fungsi organik di laboratorium."
+st.markdown(
+    "<div class='title-main'>🧪 ChemQual Premium</div>",
+    unsafe_allow_html=True
 )
 
-st.divider()
+st.markdown(
+    "<div class='subtitle'>Katalog Modern Uji Kualitatif Senyawa Organik</div>",
+    unsafe_allow_html=True
+)
+
+st.write("")
 
 # =========================================================
-# NAVIGASI TABS
+# SEARCH SECTION
 # =========================================================
-tab1, tab2 = st.tabs([
-    "🔍 Pencarian & Filter",
-    "📚 Semua Daftar Uji"
-])
+st.markdown("## 🔍 Pencarian")
 
-# =========================================================
-# TAB 1 — PENCARIAN
-# =========================================================
-with tab1:
+col1, col2 = st.columns(2)
 
-    st.markdown("## 🔍 Cari Berdasarkan Parameter")
+with col1:
+    gugus = st.selectbox(
+        "Pilih Gugus Fungsi",
+        ["Semua"] + list(df["Gugus Fungsi"].unique())
+    )
 
-    # Variabel default
-    search_gugus = "Semua Gugus"
-    search_name = ""
+with col2:
+    keyword = st.text_input(
+        "Cari nama uji / reagen",
+        placeholder="Contoh: Tollens"
+    )
 
-    # Kolom input
-    col1, col2 = st.columns(2)
+filtered_df = df.copy()
 
-    with col1:
-        search_gugus = st.selectbox(
-            "Pilih Gugus Fungsi:",
-            ["Semua Gugus"] + list(df["Gugus Fungsi"].unique())
-        )
+if gugus != "Semua":
+    filtered_df = filtered_df[
+        filtered_df["Gugus Fungsi"] == gugus
+    ]
 
-    with col2:
-        search_name = st.text_input(
-            "Cari nama uji / reagen:",
-            placeholder="Contoh: Tollens, FeCl3"
-        )
+if keyword:
+    filtered_df = filtered_df[
+        filtered_df["Nama Uji"].str.contains(keyword, case=False)
+        |
+        filtered_df["Reagen"].str.contains(keyword, case=False)
+    ]
 
-    # Filter dataframe
-    filtered_df = df.copy()
-
-    if search_gugus != "Semua Gugus":
-        filtered_df = filtered_df[
-            filtered_df["Gugus Fungsi"] == search_gugus
-        ]
-
-    if search_name:
-        filtered_df = filtered_df[
-            filtered_df["Nama Uji"].str.contains(search_name, case=False) |
-            filtered_df["Reagen"].str.contains(search_name, case=False)
-        ]
-
-    # Tampilkan hasil
-    if filtered_df.empty:
-        st.warning("❌ Uji tidak ditemukan.")
-    else:
-        for index, row in filtered_df.iterrows():
-
-            with st.expander(
-                f"🧪 {row['Nama Uji']} — {row['Gugus Fungsi']}",
-                expanded=True
-            ):
-
-                c1, c2 = st.columns([2, 1])
-
-                with c1:
-                    st.markdown(f"### 🔬 Reagen")
-                    st.write(row["Reagen"])
-
-                    st.markdown("### 📝 Prosedur")
-                    st.write(row["Prosedur Singkat"])
-
-                    st.markdown("### ⚗️ Persamaan Reaksi")
-                    st.code(row["Reaksi Kimia"], language="text")
-
-                with c2:
-                    st.info(
-                        f"💡 Hasil Positif:\n\n{row['Hasil Positif']}"
-                    )
-
-                    st.success(
-                        f"👁️ Pengamatan Visual:\n\n{row['Warna/Visual']}"
-                    )
+st.write("")
 
 # =========================================================
-# TAB 2 — SEMUA DATA
+# DISPLAY CARDS
 # =========================================================
-with tab2:
+for index, row in filtered_df.iterrows():
 
-    st.markdown("## 📚 Daftar Lengkap Uji Kualitatif")
+    st.markdown(f"""
+    <div class="card">
 
-    for index, row in df.iterrows():
+    <h2>🧪 {row['Nama Uji']}</h2>
 
-        with st.container():
+    <p><b>🎯 Gugus Fungsi:</b><br>
+    {row['Gugus Fungsi']}</p>
 
-            st.markdown(f"# 🧪 {row['Nama Uji']}")
+    <p><b>🔬 Reagen:</b><br>
+    {row['Reagen']}</p>
 
-            col1, col2 = st.columns([2, 1])
+    <p><b>📝 Prosedur:</b><br>
+    {row['Prosedur']}</p>
 
-            with col1:
-                st.write(
-                    f"### 🎯 Gugus Fungsi\n{row['Gugus Fungsi']}"
-                )
+    <p><b>💡 Hasil Positif:</b><br>
+    {row['Hasil']}</p>
 
-                st.write(
-                    f"### 🔬 Reagen\n{row['Reagen']}"
-                )
+    <p><b>👁️ Pengamatan Visual:</b><br>
+    {row['Visual']}</p>
 
-                st.write(
-                    f"### 📝 Prosedur\n{row['Prosedur Singkat']}"
-                )
+    <div class="reaction-box">
+    ⚗️ {row['Reaksi']}
+    </div>
 
-                st.write("### ⚗️ Reaksi Kimia")
-                st.code(row["Reaksi Kimia"], language="text")
-
-            with col2:
-                st.info(
-                    f"💡 Hasil Positif:\n\n{row['Hasil Positif']}"
-                )
-
-                st.success(
-                    f"👁️ Visual:\n\n{row['Warna/Visual']}"
-                )
-
-            st.divider()
+    </div>
+    """, unsafe_allow_html=True)
 
 # =========================================================
 # FOOTER
 # =========================================================
-st.caption("© 2026 ChemQual — Katalog Uji Organik")
+st.markdown("""
+<div class='footer'>
+© 2026 ChemQual Premium — Organic Chemistry Lab Assistant
+</div>
+""", unsafe_allow_html=True)
+```
